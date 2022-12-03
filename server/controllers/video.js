@@ -2,6 +2,16 @@ import User from "../models/User.js";
 import Video from "../models/Video.js";
 import { createError } from "../error.js";
 
+// get all videos
+export const getVideos = async (req, res) => {
+  try {
+    const videos = await Video.find();
+    res.status(200).json(videos);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
 export const addVideo = async (req, res, next) => {
   const newVideo = new Video({ userId: req.user.id, ...req.body });
   try {

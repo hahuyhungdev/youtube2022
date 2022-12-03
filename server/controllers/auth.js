@@ -6,12 +6,19 @@ import jwt from "jsonwebtoken";
 
 export const signup = async (req, res, next) => {
   try {
+    const { email } = req.body;
+    // check if user already exists
+    const user = await User.findOne({
+      email,
+    });
+    if (user) {
+      return next(createError(400, "User already exists with this email!"));
+    }
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
     const newUser = new User({ ...req.body, password: hash });
-
     await newUser.save();
-    res.status(200).send("User has been created!");
+    res.status(200).json(newUser);
   } catch (err) {
     next(err);
   }
@@ -26,7 +33,9 @@ export const signin = async (req, res, next) => {
 
     if (!isCorrect) return next(createError(400, "Wrong Credentials!"));
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT);
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || "hahuyhung", {
+      expiresIn: "1d",
+    });
     const { password, ...others } = user._doc;
 
     res
@@ -43,6 +52,7 @@ export const signin = async (req, res, next) => {
 export const googleAuth = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
+    console.log(user);
     if (user) {
       const token = jwt.sign({ id: user._id }, process.env.JWT);
       res
@@ -57,7 +67,7 @@ export const googleAuth = async (req, res, next) => {
         fromGoogle: true,
       });
       const savedUser = await newUser.save();
-      const token = jwt.sign({ id: savedUser._id }, process.env.JWT);
+      const token = jwt.sign({ id: savedUser._id }, process.env.JWT || "hahuyhung");
       res
         .cookie("access_token", token, {
           httpOnly: true,
