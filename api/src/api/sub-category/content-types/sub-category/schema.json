@@ -4,7 +4,7 @@
   "info": {
     "singularName": "sub-category",
     "pluralName": "sub-categories",
-    "displayName": "subCategory",
+    "displayName": "SubCategory",
     "description": ""
   },
   "options": {
@@ -25,7 +25,7 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::category.category",
-      "inversedBy": "sub_categories"
+      "inversedBy": "categories"
     }
   }
 }

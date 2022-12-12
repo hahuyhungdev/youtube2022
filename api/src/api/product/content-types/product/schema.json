@@ -47,12 +47,6 @@
       "type": "boolean",
       "default": false
     },
-    "categories": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::category.category",
-      "inversedBy": "products"
-    },
     "sub_categories": {
       "type": "relation",
       "relation": "manyToMany",
@@ -64,7 +58,7 @@
       "enum": [
         "normal",
         "featured",
-        "trending"
+        "trend"
       ]
     }
   }
