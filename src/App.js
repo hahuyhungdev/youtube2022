@@ -1,12 +1,6 @@
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Route,
-  Outlet,
-  Navigate,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Route, Outlet, Navigate } from "react-router-dom";
 import Navbar from "./components/navbar/Navbar";
 import LeftBar from "./components/leftBar/LeftBar";
 import RightBar from "./components/rightBar/RightBar";
@@ -18,7 +12,7 @@ import { DarkModeContext } from "./context/darkModeContext";
 import { AuthContext } from "./context/authContext";
 
 function App() {
-  const {currentUser} = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
 
   const { darkMode } = useContext(DarkModeContext);
 

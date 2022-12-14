@@ -15,7 +15,13 @@ import { AuthContext } from "../../context/authContext";
 const Navbar = () => {
   const { toggle, darkMode } = useContext(DarkModeContext);
   const { currentUser } = useContext(AuthContext);
-
+  {
+    /* handle logout remove user at local Store */
+  }
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    window.location.reload();
+  };
   return (
     <div className="navbar">
       <div className="left">
@@ -23,11 +29,7 @@ const Navbar = () => {
           <span>lamasocial</span>
         </Link>
         <HomeOutlinedIcon />
-        {darkMode ? (
-          <WbSunnyOutlinedIcon onClick={toggle} />
-        ) : (
-          <DarkModeOutlinedIcon onClick={toggle} />
-        )}
+        {darkMode ? <WbSunnyOutlinedIcon onClick={toggle} /> : <DarkModeOutlinedIcon onClick={toggle} />}
         <GridViewOutlinedIcon />
         <div className="search">
           <SearchOutlinedIcon />
@@ -35,14 +37,11 @@ const Navbar = () => {
         </div>
       </div>
       <div className="right">
-        <PersonOutlinedIcon />
+        <PersonOutlinedIcon onClick={handleLogout} style={{ cursor: "pointer" }} />
         <EmailOutlinedIcon />
         <NotificationsOutlinedIcon />
         <div className="user">
-          <img
-            src={currentUser.profilePic}
-            alt=""
-          />
+          <img src={currentUser.profilePic} alt="" />
           <span>{currentUser.name}</span>
         </div>
       </div>
